@@ -69,3 +69,28 @@ def identify(obsfilename):
     D = (darkdf["YSTRT"] == Q_YSTRT)
     df = darkdf[A & B & C & D].reset_index(drop=True)
     return df
+
+
+def make1Expdark(obsfile):
+    print(obsfile)
+    df = identify(obsfile)[0]
+    year = identify(obsfile)[1]
+    darkbasefolder = r'/mnt/e/' + year + r'/dark/'
+    obsdata = readdata(obsfile)
+    # obsdataと同じshapeの0のnumpyを作成
+    darkdata = np.zeros(list(obsdata.shape))
+    if len(df) == 0:
+        print("該当のダークが存在しない")
+        # ここにはその場合の処理を記載する。
+
+    # 特定したダークファイル一枚一枚に対して、Q_CHEBが同じものを抽出??
+
+    # df[df["Q_CHEB"].duplicated()]
+    for darkfile in df["FRAME_ID"]:
+        darkfilepath = darkbasefolder + darkfile + r'.fits'
+        darkdata += np.mean(readdata(darkfilepath), axis=1, keepdims=True)
+    # meanをとる
+    meandark = darkdata / len(df)
+    # 1Expあたりに直す
+    meandark_1 = meandark / int(df["Q_CHEB"][0])
+    return meandark_1
