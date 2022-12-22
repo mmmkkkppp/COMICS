@@ -20,7 +20,16 @@ def readdata(filename):
 def q_bsep_posi(input):
     return input[:,::2,:,:]
 def q_bsep_nega(input):
-    return input[:,1::2,:,:]   
+    return input[:,1::2,:,:]
+
+#RAWモードの場合にAddモードに変換する
+def RAWtoAdd(input, obsheader):
+    Q_CHCN = int(obsheader["Q_CHCN"])
+    X = np.sum(np.array(np.split(input, Q_CHCN, axis=1)), axis=0)
+    obsheader["NAXIS3"] = obsheader["Q_CHCN"]
+    obsheader["Q_CHAM"] =0
+    return X
+    
 #z方向平均
 def mean_z(input):
     return np.mean(input, axis=1, keepdims=True)
@@ -47,8 +56,8 @@ def q_subch(input):
     # input_to_output[0, 0, :, :] = 1
     return input_to_output
 #fitsファイル作成用
-def makefits(dataname, filename): 
-    hdu = fits.PrimaryHDU(data=dataname)
+def makefits(dataname, filename, obsfile): 
+    hdu = fits.PrimaryHDU(data=dataname,header=fits.getheader(obsfile))
     fits.HDUList([hdu]).writeto(str(filename), overwrite=True)
 
 
@@ -88,7 +97,7 @@ def make1Expdark(obsfile):
     if len(df) == 0:
         print("該当のダークが存在しない")
         # ここにはその場合の処理を記載する。
-        
+
     # 特定したダークファイル一枚一枚に対して、Q_CHEBが同じものを抽出??
 
     # df[df["Q_CHEB"].duplicated()]
@@ -100,3 +109,63 @@ def make1Expdark(obsfile):
     # 1Expあたりに直す
     meandark_1 = meandark / int(df["Q_CHEB"][0])
     return meandark_1
+
+#積分時間をとってくる関数
+def exptime(obsfile):
+    obsheader = readheader(obsfile)
+    Q_1FRAME = obsheader["Q_1FRAME"]
+    Q_CHCN = obsheader["Q_CHCN"]
+    exptime = int(Q_1FRAME) * int(Q_CHCN) / 2
+    return exptime
+
+
+def make_obj(obsfile):
+    # dark_1を取得
+    dark_1 = make1Expdark(obsfile)
+    # Q_CHEB倍する
+    obsheader = readheader(obsfile)
+    Q_CHEB = obsheader["Q_CHEB"]
+    dark_CHEB = dark_1 * int(Q_CHEB)
+    # obsdata
+    obsdata = readdata(obsfile)
+    # skydata作成
+    skydata = obsdata - dark_CHEB
+    # q_bsepによりposiとnegaにわける
+    # Addモードの場合だけでやってみる。
+    skydata_p = q_bsep_posi(skydata)
+    skydata_n = q_bsep_nega(skydata)
+
+    # z方向平均
+    sky_pa = mean_z(skydata_p)
+    sky_na = mean_z(skydata_n)
+
+    # gaussian　平均
+    sky_paG = gaussfilter(sky_pa)
+    sky_naG = gaussfilter(sky_na)
+
+    # Flatの作成
+    sky_paF = sky_pa / sky_paG
+    sky_naF = sky_na / sky_naG
+    
+    comqfile = obsfile.replace("COMA", "COMQ")
+
+    comq_obs = readdata(comqfile)
+    obj_obs = q_subch(comq_obs)
+    # Flatで割る
+    obj_obs_datP0 = obj_obs / sky_naF
+    obj_obs_datN0 = obj_obs / sky_paF
+    
+    #Exptimeで割る
+    obj_obs_datP0_per1sec = obj_obs_datP0 / exptime(comqfile)
+    obj_obs_datN0_per1sec = obj_obs_datN0 / exptime(comqfile)
+    
+    os.makedirs(r'/mnt/e/'+obsyear(obsfile)+r'/out_obj/',exist_ok=True)
+    outputfol_P = r'/mnt/e/'+obsyear(obsfile)+r'/out_obj/obj_'+obsfile[-10:-5]+r'_datP0_per1sec.fits'
+    makefits(obj_obs_datP0_per1sec,outputfol_P, comqfile)
+    
+    outputfol_N = r'/mnt/e/' + \
+        obsyear(obsfile)+r'/out_obj/obj_' + \
+        obsfile[-10:-5]+r'_datN0_per1sec.fits'
+    makefits(obj_obs_datN0_per1sec, outputfol_N, comqfile)
+    
+    return obj_obs_datP0_per1sec, obj_obs_datN0_per1sec
