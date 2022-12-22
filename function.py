@@ -47,9 +47,14 @@ def q_subch(input):
     # input_to_output[0, 0, :, :] = 1
     return input_to_output
 #fitsファイル作成用
-def makefits(dataname, filename):
+def makefits(dataname, filename): 
     hdu = fits.PrimaryHDU(data=dataname)
     fits.HDUList([hdu]).writeto(str(filename), overwrite=True)
+
+
+def obsyear(obs):
+    year = readheader(obs)["DATE-OBS"][:4]
+    return year
 
 def identify(obsfilename):
     obsheader = readheader(obsfilename)
@@ -71,10 +76,11 @@ def identify(obsfilename):
     return df
 
 
+
 def make1Expdark(obsfile):
     print(obsfile)
-    df = identify(obsfile)[0]
-    year = identify(obsfile)[1]
+    df = identify(obsfile)
+    year = obsyear(obsfile)
     darkbasefolder = r'/mnt/e/' + year + r'/dark/'
     obsdata = readdata(obsfile)
     # obsdataと同じshapeの0のnumpyを作成
@@ -82,7 +88,7 @@ def make1Expdark(obsfile):
     if len(df) == 0:
         print("該当のダークが存在しない")
         # ここにはその場合の処理を記載する。
-
+        
     # 特定したダークファイル一枚一枚に対して、Q_CHEBが同じものを抽出??
 
     # df[df["Q_CHEB"].duplicated()]
