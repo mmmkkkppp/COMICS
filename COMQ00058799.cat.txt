@@ -1,0 +1,5 @@
+#   1 X_IMAGE                Object position along x                                    [pixel]
+#   2 Y_IMAGE                Object position along y                                    [pixel]
+#   3 FLUX_RADIUS            Fraction-of-light radii                                    [pixel]
+#   6 FLAGS                  Extraction flags                                          
+   135.6594    136.6841      1.391      2.127      4.367   4

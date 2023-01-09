@@ -1,0 +1,19 @@
+解析手順
+まずは、外部HDDの該当年度の
+ls /mnt/e/2003/COMA*.fits > list2003.lst
+ls /mnt/e/2004/COMA*.fits > list2004.lst
+ls /mnt/e/2005/COMA*.fits > list2005.lst
+一部だけ取り出したいときは、
+ls /mnt/e/2003/COMA0004[0-1]*.fits > list.lst
+
+while read file; do echo $file; python3 processcommand.py $file > `echo $file | sed -e 's/\/mnt\/e\/2003/.\/errorlog\/2003/g' -e 's/fits/log/g'`; done < list2003.lst
+
+while read file; do echo $file; python3 processcommand.py $file > `echo $file | sed -e 's/\/mnt\/e\/2004/.\/errorlog\/2004/g' -e 's/fits/log/g'`; done < list2004.lst
+
+while read file; do echo $file; python3 processcommand.py $file > `echo $file | sed -e 's/\/mnt\/e\/2005/.\/errorlog\/2005/g' -e 's/fits/log/g'`; done < list2005.lst
+読みだす
+ファイル名書く
+python実行
+出力を./errorlog/COMA~~.logに記載する
+list.lstから読みだして次のloopに入る
+

@@ -67,27 +67,28 @@ def obsyear(obs):
 
 def identify(obsfilename):
     obsheader = readheader(obsfilename)
-    #年を取得
+    # 年を取得
     year = obsheader["DATE-OBS"][:4]
-    #DARK.csvにアクセス
-    darkcsv = r'/mnt/e/'+year +r'/dark/dark.csv'
+    # DARK.csvにアクセス
+    darkcsv = r'/mnt/e/'+year + r'/dark/dark.csv'
     darkdf = pd.read_csv(darkcsv)
-    #一致条件を指定する
+    # 一致条件を指定する
     Q_PIXTIM = obsheader["Q_PIXTIM"]
     Q_RRSTRT = obsheader["Q_RRSTRT"]
     DATE = obsheader["DATE-OBS"]
     Q_YSTRT = obsheader["Q_YSTRT"]
+    NAXIS4 = obsheader["NAXIS4"]
     A = (darkdf["PIXTIM"] == Q_PIXTIM)
     B = (darkdf["RRSTRT"] == Q_RRSTRT)
     C = (darkdf["DATE"] == DATE)
     D = (darkdf["YSTRT"] == Q_YSTRT)
-    df = darkdf[A & B & C & D].reset_index(drop=True)
+    E = (darkdf["NAXIS4"] == NAXIS4)
+    df = darkdf[A & B & C & D & E].reset_index(drop=True)
     return df
 
 
 
 def make1Expdark(obsfile):
-    print(obsfile)
     df = identify(obsfile)
     year = obsyear(obsfile)
     darkbasefolder = r'/mnt/e/' + year + r'/dark/'
@@ -95,7 +96,8 @@ def make1Expdark(obsfile):
     # obsdataと同じshapeの0のnumpyを作成
     darkdata = np.zeros(list(obsdata.shape))
     if len(df) == 0:
-        print("該当のダークが存在しない")
+        # print("darkが存在しない")
+        return None
         # ここにはその場合の処理を記載する。
 
     # 特定したダークファイル一枚一枚に対して、Q_CHEBが同じものを抽出??
@@ -115,19 +117,45 @@ def exptime(obsfile):
     obsheader = readheader(obsfile)
     Q_1FRAME = obsheader["Q_1FRAME"]
     Q_CHCN = obsheader["Q_CHCN"]
-    exptime = int(Q_1FRAME) * int(Q_CHCN) / 2
+    print(Q_1FRAME)
+    print(Q_CHCN)
+    exptime = Q_1FRAME * Q_CHCN / 2
     return exptime
+
+def exptime1(obsfile):
+    obsheader = readheader(obsfile)
+    Q_1FRAME = obsheader["Q_1FRAME"]
+    Q_CHCN = obsheader["Q_CHCN"]
+    print(Q_1FRAME)
+    print(Q_CHCN)
+    exptime1 = int(Q_1FRAME) * int(Q_CHCN) / 2
+    return exptime1
 
 
 def make_obj(obsfile):
-    # dark_1を取得
+    
+# dark_1を取得
+    
     dark_1 = make1Expdark(obsfile)
+    if dark_1 is None:
+        return None
     # Q_CHEB倍する
     obsheader = readheader(obsfile)
     Q_CHEB = obsheader["Q_CHEB"]
     dark_CHEB = dark_1 * int(Q_CHEB)
     # obsdata
-    obsdata = readdata(obsfile)
+    # この時点で、RAWをAddに変換する。
+    if (obsheader["Q_CHAM"] ==0):
+        obsdata_RAW = readdata(obsfile)
+        Q_CHCN = obsheader["Q_CHCN"]
+        A = np.array(np.split(obsdata_RAW, Q_CHCN, axis=1))
+        obsdata = np.sum(A, axis=0)
+    elif (obsheader["Q_CHAM"]==1):
+        obsdata = readdata(obsfile)
+    elif (obsheader["Q_CHAM"]==2):
+        print("ECOモードによりskip")
+    
+    
     # skydata作成
     skydata = obsdata - dark_CHEB
     # q_bsepによりposiとnegaにわける
