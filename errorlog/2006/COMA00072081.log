@@ -1,0 +1,3 @@
+=== エラー内容 ===
+type:<class 'ValueError'>
+args:('operands could not be broadcast together with shapes (1,12,240,320) (1,144,240,320) ',)

@@ -3,17 +3,84 @@
 ls /mnt/e/2003/COMA*.fits > list2003.lst
 ls /mnt/e/2004/COMA*.fits > list2004.lst
 ls /mnt/e/2005/COMA*.fits > list2005.lst
+ls /mnt/e/2006/COMA*.fits > list2006.lst
+ls /mnt/e/2007/COMA*.fits > list2007.lst
+ls /mnt/e/2008/COMA*.fits > list2008.lst
+ls /mnt/e/2009/COMA*.fits > list2009.lst
+ls /mnt/e/2010/COMA*.fits > list2010.lst
+ls /mnt/e/2011/COMA*.fits > list2011.lst
+ls /mnt/e/2012/COMA*.fits > list2012.lst
+ls /mnt/e/2013/COMA*.fits > list2013.lst
+ls /mnt/e/2014/COMA*.fits > list2014.lst
+ls /mnt/e/2015/COMA*.fits > list2015.lst
+ls /mnt/e/2016/COMA*.fits > list2016.lst
+ls /mnt/e/2017/COMA*.fits > list2017.lst
+ls /mnt/e/2018/COMA*.fits > list2018.lst
+ls /mnt/e/2019/COMA*.fits > list2019.lst
+ls /mnt/e/2020/COMA*.fits > list2020.lst
+
 一部だけ取り出したいときは、
 ls /mnt/e/2003/COMA0004[0-1]*.fits > list.lst
 
 while read file; do echo $file; python3 processcommand.py $file > `echo $file | sed -e 's/\/mnt\/e\/2003/.\/errorlog\/2003/g' -e 's/fits/log/g'`; done < list2003.lst
-
 while read file; do echo $file; python3 processcommand.py $file > `echo $file | sed -e 's/\/mnt\/e\/2004/.\/errorlog\/2004/g' -e 's/fits/log/g'`; done < list2004.lst
-
 while read file; do echo $file; python3 processcommand.py $file > `echo $file | sed -e 's/\/mnt\/e\/2005/.\/errorlog\/2005/g' -e 's/fits/log/g'`; done < list2005.lst
+while read file; do echo $file; python3 processcommand.py $file > `echo $file | sed -e 's/\/mnt\/e\/2006/.\/errorlog\/2006/g' -e 's/fits/log/g'`; done < list2006.lst
+while read file; do echo $file; python3 processcommand.py $file > `echo $file | sed -e 's/\/mnt\/e\/2007/.\/errorlog\/2007/g' -e 's/fits/log/g'`; done < list2007.lst
+while read file; do echo $file; python3 processcommand.py $file > `echo $file | sed -e 's/\/mnt\/e\/2008/.\/errorlog\/2008/g' -e 's/fits/log/g'`; done < list2008.lst
+while read file; do echo $file; python3 processcommand.py $file > `echo $file | sed -e 's/\/mnt\/e\/2009/.\/errorlog\/2009/g' -e 's/fits/log/g'`; done < list2009.lst
+while read file; do echo $file; python3 processcommand.py $file > `echo $file | sed -e 's/\/mnt\/e\/2010/.\/errorlog\/2010/g' -e 's/fits/log/g'`; done < list2010.lst
+while read file; do echo $file; python3 processcommand.py $file > `echo $file | sed -e 's/\/mnt\/e\/2011/.\/errorlog\/2011/g' -e 's/fits/log/g'`; done < list2011.lst
+while read file; do echo $file; python3 processcommand.py $file > `echo $file | sed -e 's/\/mnt\/e\/2012/.\/errorlog\/2012/g' -e 's/fits/log/g'`; done < list2012.lst
+while read file; do echo $file; python3 processcommand.py $file > `echo $file | sed -e 's/\/mnt\/e\/2013/.\/errorlog\/2013/g' -e 's/fits/log/g'`; done < list2013.lst
+while read file; do echo $file; python3 processcommand.py $file > `echo $file | sed -e 's/\/mnt\/e\/2014/.\/errorlog\/2014/g' -e 's/fits/log/g'`; done < list2014.lst
+while read file; do echo $file; python3 processcommand.py $file > `echo $file | sed -e 's/\/mnt\/e\/2015/.\/errorlog\/2015/g' -e 's/fits/log/g'`; done < list2015.lst
+while read file; do echo $file; python3 processcommand.py $file > `echo $file | sed -e 's/\/mnt\/e\/2016/.\/errorlog\/2016/g' -e 's/fits/log/g'`; done < list2016.lst
+while read file; do echo $file; python3 processcommand.py $file > `echo $file | sed -e 's/\/mnt\/e\/2017/.\/errorlog\/2017/g' -e 's/fits/log/g'`; done < list2017.lst
+while read file; do echo $file; python3 processcommand.py $file > `echo $file | sed -e 's/\/mnt\/e\/2018/.\/errorlog\/2018/g' -e 's/fits/log/g'`; done < list2018.lst
+while read file; do echo $file; python3 processcommand.py $file > `echo $file | sed -e 's/\/mnt\/e\/2019/.\/errorlog\/2019/g' -e 's/fits/log/g'`; done < list2019.lst
+while read file; do echo $file; python3 processcommand.py $file > `echo $file | sed -e 's/\/mnt\/e\/2020/.\/errorlog\/2020/g' -e 's/fits/log/g'`; done < list2020.lst
 読みだす
 ファイル名書く
 python実行
 出力を./errorlog/COMA~~.logに記載する
 list.lstから読みだして次のloopに入る
+
+
+ls /mnt/e/2003/COMA*.fits > list2003.lst
+while read file; do echo $file; python3 processcommand.py $file > `echo $file | sed -e 's/\/mnt\/e\/2003/.\/errorlog\/2003/g' -e 's/fits/log/g'`; done < list2003.lst
+ls /mnt/e/2004/COMA*.fits > list2004.lst
+while read file; do echo $file; python3 processcommand.py $file > `echo $file | sed -e 's/\/mnt\/e\/2004/.\/errorlog\/2004/g' -e 's/fits/log/g'`; done < list2004.lst
+ls /mnt/e/2005/COMA*.fits > list2005.lst
+while read file; do echo $file; python3 processcommand.py $file > `echo $file | sed -e 's/\/mnt\/e\/2005/.\/errorlog\/2005/g' -e 's/fits/log/g'`; done < list2005.lst
+ls /mnt/e/2006/COMA*.fits > list2006.lst
+while read file; do echo $file; python3 processcommand.py $file > `echo $file | sed -e 's/\/mnt\/e\/2006/.\/errorlog\/2006/g' -e 's/fits/log/g'`; done < list2006.lst
+ls /mnt/e/2007/COMA*.fits > list2007.lst
+while read file; do echo $file; python3 processcommand.py $file > `echo $file | sed -e 's/\/mnt\/e\/2007/.\/errorlog\/2007/g' -e 's/fits/log/g'`; done < list2007.lst
+ls /mnt/e/2008/COMA*.fits > list2008.lst
+while read file; do echo $file; python3 processcommand.py $file > `echo $file | sed -e 's/\/mnt\/e\/2008/.\/errorlog\/2008/g' -e 's/fits/log/g'`; done < list2008.lst
+ls /mnt/e/2009/COMA*.fits > list2009.lst
+while read file; do echo $file; python3 processcommand.py $file > `echo $file | sed -e 's/\/mnt\/e\/2009/.\/errorlog\/2009/g' -e 's/fits/log/g'`; done < list2009.lst
+ls /mnt/e/2010/COMA*.fits > list2010.lst
+while read file; do echo $file; python3 processcommand.py $file > `echo $file | sed -e 's/\/mnt\/e\/2010/.\/errorlog\/2010/g' -e 's/fits/log/g'`; done < list2010.lst
+ls /mnt/e/2011/COMA*.fits > list2011.lst
+while read file; do echo $file; python3 processcommand.py $file > `echo $file | sed -e 's/\/mnt\/e\/2011/.\/errorlog\/2011/g' -e 's/fits/log/g'`; done < list2011.lst
+ls /mnt/e/2012/COMA*.fits > list2012.lst
+while read file; do echo $file; python3 processcommand.py $file > `echo $file | sed -e 's/\/mnt\/e\/2012/.\/errorlog\/2012/g' -e 's/fits/log/g'`; done < list2012.lst
+ls /mnt/e/2013/COMA*.fits > list2013.lst
+while read file; do echo $file; python3 processcommand.py $file > `echo $file | sed -e 's/\/mnt\/e\/2013/.\/errorlog\/2013/g' -e 's/fits/log/g'`; done < list2013.lst
+ls /mnt/e/2014/COMA*.fits > list2014.lst
+while read file; do echo $file; python3 processcommand.py $file > `echo $file | sed -e 's/\/mnt\/e\/2014/.\/errorlog\/2014/g' -e 's/fits/log/g'`; done < list2014.lst
+ls /mnt/e/2015/COMA*.fits > list2015.lst
+while read file; do echo $file; python3 processcommand.py $file > `echo $file | sed -e 's/\/mnt\/e\/2015/.\/errorlog\/2015/g' -e 's/fits/log/g'`; done < list2015.lst
+ls /mnt/e/2016/COMA*.fits > list2016.lst
+while read file; do echo $file; python3 processcommand.py $file > `echo $file | sed -e 's/\/mnt\/e\/2016/.\/errorlog\/2016/g' -e 's/fits/log/g'`; done < list2016.lst
+ls /mnt/e/2017/COMA*.fits > list2017.lst
+while read file; do echo $file; python3 processcommand.py $file > `echo $file | sed -e 's/\/mnt\/e\/2017/.\/errorlog\/2017/g' -e 's/fits/log/g'`; done < list2017.lst
+ls /mnt/e/2018/COMA*.fits > list2018.lst
+while read file; do echo $file; python3 processcommand.py $file > `echo $file | sed -e 's/\/mnt\/e\/2018/.\/errorlog\/2018/g' -e 's/fits/log/g'`; done < list2018.lst
+ls /mnt/e/2019/COMA*.fits > list2019.lst
+while read file; do echo $file; python3 processcommand.py $file > `echo $file | sed -e 's/\/mnt\/e\/2019/.\/errorlog\/2019/g' -e 's/fits/log/g'`; done < list2019.lst
+ls /mnt/e/2020/COMA*.fits > list2020.lst
+while read file; do echo $file; python3 processcommand.py $file > `echo $file | sed -e 's/\/mnt\/e\/2020/.\/errorlog\/2020/g' -e 's/fits/log/g'`; done < list2020.lst
 
