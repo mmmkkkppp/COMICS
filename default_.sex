@@ -8,9 +8,9 @@ CATALOG_TYPE     ASCII_HEAD     # NONE,ASCII,ASCII_HEAD, ASCII_SKYCAT,
 PARAMETERS_NAME  param.param  # name of the file containing catalog contents
 #------------------------------- Extraction ----------------------------------
 DETECT_TYPE      CCD            # CCD (linear) or PHOTO (with gamma correction)
-DETECT_MINAREA   2.523              # min. # of pixels above threshold
-DETECT_THRESH    1.5            # <sigmas> or <threshold>,<ZP> in mag.arcsec-2
-ANALYSIS_THRESH  1.5            # <sigmas> or <threshold>,<ZP> in mag.arcsec-2
+DETECT_MINAREA   5              # min. # of pixels above threshold
+DETECT_THRESH    5              # <sigmas> or <threshold>,<ZP> in mag.arcsec-2
+ANALYSIS_THRESH  5              # <sigmas> or <threshold>,<ZP> in mag.arcsec-2
 FILTER           N              # apply filter for detection (Y or N)?
 FILTER_NAME      default.conv   # name of the file containing the filter
 DEBLEND_NTHRESH  32             # Number of deblending sub-thresholds
