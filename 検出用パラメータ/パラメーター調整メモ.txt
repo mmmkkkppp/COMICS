@@ -1,3 +1,6 @@
 default.sex
 ファイルにおいて、
 DETECT_MINAREAを5から10に変えたことで、検出された天体は一つとなった。
+
+COMICSのpixel scaleは　0.13 arcsec / pixelとなっている。
+

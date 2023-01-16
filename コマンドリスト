@@ -84,3 +84,13 @@ while read file; do echo $file; python3 processcommand.py $file > `echo $file | 
 ls /mnt/e/2020/COMA*.fits > list2020.lst
 while read file; do echo $file; python3 processcommand.py $file > `echo $file | sed -e 's/\/mnt\/e\/2020/.\/errorlog\/2020/g' -e 's/fits/log/g'`; done < list2020.lst
 
+
+
+pylist=/mnt/c/Users/yyush/Documents/GitHub/COMICS/catmake.py
+
+
+ls /mnt/e/2006/out_obj/* > /mnt/c/Users/yyush/Documents/GitHub/COMICS/objlist/obj2006.lst
+
+lst=/mnt/c/Users/yyush/Documents/GitHub/COMICS/objlist/obj2006.lst
+
+while read file; do echo $file; python3 catmake.py $file; done < /mnt/c/Users/yyush/Documents/GitHub/COMICS/objlist/obj2006.lst

@@ -1,0 +1,13 @@
+#   1 NUMBER                 Running object number                                     
+#   2 XWIN_IMAGE             Windowed position estimate along x                         [pixel]
+#   3 YWIN_IMAGE             Windowed position estimate along y                         [pixel]
+#   4 ALPHA_J2000            Right ascension of barycenter (J2000)                      [deg]
+#   5 DELTA_J2000            Declination of barycenter (J2000)                          [deg]
+#   6 MAG_AUTO               Kron-like elliptical aperture magnitude                    [mag]
+#   7 FWHM_IMAGE             FWHM assuming a gaussian core                              [pixel]
+#   8 ELONGATION             A_IMAGE/B_IMAGE                                           
+#   9 MAG_APER               Fixed aperture magnitude vector                            [mag]
+#  14 MAGERR_APER            RMS error vector for fixed aperture mag.                   [mag]
+#  19 FLUX_APER              Flux vector within fixed circular aperture(s)              [count]
+#  24 FLUXERR_APER           RMS error vector for aperture flux(es)                     [count]
+         1    135.6177    136.7913 213.2235233 -10.2726641 -15.6884     4.16    1.027 -13.8581 -14.4846 -15.0789 -15.3052 -15.4762   0.0030   0.0024   0.0024   0.0027   0.0030     349329.4     622092.6      1075379      1324549      1550530      951.955     1399.107     2331.178     3272.609     4214.545
