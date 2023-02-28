@@ -1,8 +1,0 @@
-#   1 NUMBER                 Running object number                                     
-#   2 XWIN_IMAGE             Windowed position estimate along x                         [pixel]
-#   3 YWIN_IMAGE             Windowed position estimate along y                         [pixel]
-#   4 MAG_APER               Fixed aperture magnitude vector                            [mag]
-#   5 MAG_AUTO               Kron-like elliptical aperture magnitude                    [mag]
-#   6 FWHM_IMAGE             FWHM assuming a gaussian core                              [pixel]
-#   7 FLAGS                  Extraction flags                                          
-         1    135.6179    136.7910 -15.0824 -15.6992     4.42   4

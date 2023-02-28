@@ -1,3 +1,0 @@
-=== エラー内容 ===
-type:<class 'ValueError'>
-args:('operands could not be broadcast together with shapes (1,9,240,320) (1,216,240,320) ',)
